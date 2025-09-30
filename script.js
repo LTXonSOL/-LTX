@@ -1,16 +1,31 @@
-const priceInput = document.getElementById("priceInput");
-const changeInput = document.getElementById("changeInput");
 const priceDisplay = document.getElementById("priceDisplay");
 const changeDisplay = document.getElementById("changeDisplay");
-const addPointBtn = document.getElementById("addPoint");
+const marketCapDisplay = document.getElementById("marketCap");
 const ctx = document.getElementById("priceChart").getContext("2d");
 
-// Startwerte: gerade Linie
+// =====================
+// Hier änderst du die Werte direkt im Code
+// =====================
+const marketCap = "$5.8K";
+const price = 0.00000584;
+const change = "+$0 (+0.00%)"; // z.B. "-$0 (-0.00%)"
+
+// =====================
+// Setze die Werte auf der Seite
+// =====================
+marketCapDisplay.textContent = marketCap;
+priceDisplay.textContent = `$${price.toFixed(8)}`;
+changeDisplay.textContent = change;
+changeDisplay.className = change.includes("-") ? "negative" : "positive";
+
+// =====================
+// Chart-Daten: gerade Linie
+// =====================
 let chartData = {
-    labels: ["Now"],
+    labels: ["Now"], // Anfangslabel
     datasets: [{
         label: 'Price',
-        data: [parseFloat(priceInput.value)],
+        data: [price], // Startpreis
         borderColor: '#facc15',
         backgroundColor: 'rgba(250,204,21,0.2)',
         tension: 0.0,
@@ -21,6 +36,9 @@ let chartData = {
     }]
 };
 
+// =====================
+// Chart initialisieren
+// =====================
 const priceChart = new Chart(ctx, {
     type: 'line',
     data: chartData,
@@ -32,14 +50,16 @@ const priceChart = new Chart(ctx, {
                 grid: {
                     color: '#333',
                     borderColor: '#111827'
-                }
+                },
+                ticks: { color: '#ccc' }
             },
             y: {
                 display: true,
                 grid: {
                     color: '#333',
                     borderColor: '#111827'
-                }
+                },
+                ticks: { color: '#ccc' }
             }
         },
         plugins: {
@@ -47,22 +67,3 @@ const priceChart = new Chart(ctx, {
         }
     }
 });
-
-// Initialanzeige
-priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
-changeDisplay.textContent = changeInput.value;
-changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
-
-// Funktion für neuen Datenpunkt
-function addDataPoint() {
-    const time = new Date().toLocaleTimeString();
-    chartData.labels.push(time);
-    chartData.datasets[0].data.push(parseFloat(priceInput.value));
-    priceChart.update();
-
-    priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
-    changeDisplay.textContent = changeInput.value;
-    changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
-}
-
-addPointBtn.addEventListener("click", addDataPoint);
