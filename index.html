@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¥LTX Coin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>¥LTX Coin</h1>
+        <nav>
+            <a href="about.html">About the Coin</a>
+        </nav>
+    </header>
 
+    <main>
+        <div class="info-cards">
+            <div class="card">
+                <h2>Market Cap</h2>
+                <p id="marketCap">$5.8K</p>
+            </div>
+            <div class="card">
+                <h2>Price</h2>
+                <input type="number" id="priceInput" step="0.00000001" value="0.00000584">
+                <p id="priceDisplay">$0.00000584</p>
+            </div>
+            <div class="card">
+                <h2>Change</h2>
+                <input type="text" id="changeInput" value="+$0 (+0.00%)">
+                <p id="changeDisplay" class="positive">+$0 (+0.00%)</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="addPoint">Add Data Point</button>
+            <a href="https://pump.fun/coin/7yTXWjdakGBAwzK9f7fR5mqN8JpkzBP1kPVDL2BmGw6H" target="_blank">Buy ¥LTX</a>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
