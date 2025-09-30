@@ -5,7 +5,7 @@ const changeDisplay = document.getElementById("changeDisplay");
 const addPointBtn = document.getElementById("addPoint");
 const ctx = document.getElementById("priceChart").getContext("2d");
 
-// Startwerte: nur ein Punkt (gerade Linie)
+// Startwerte: gerade Linie
 let chartData = {
     labels: ["Now"],
     datasets: [{
@@ -14,18 +14,33 @@ let chartData = {
         borderColor: '#facc15',
         backgroundColor: 'rgba(250,204,21,0.2)',
         tension: 0.0,
+        pointRadius: 3,
+        pointBackgroundColor: '#facc15',
+        borderWidth: 2,
+        fill: true
     }]
 };
 
-// Chart initialisieren
 const priceChart = new Chart(ctx, {
     type: 'line',
     data: chartData,
     options: {
         responsive: true,
         scales: {
-            x: { display: true },
-            y: { display: true }
+            x: {
+                display: true,
+                grid: {
+                    color: '#333',
+                    borderColor: '#111827'
+                }
+            },
+            y: {
+                display: true,
+                grid: {
+                    color: '#333',
+                    borderColor: '#111827'
+                }
+            }
         },
         plugins: {
             legend: { display: false }
@@ -33,25 +48,21 @@ const priceChart = new Chart(ctx, {
     }
 });
 
-// Anzeige initial aktualisieren
+// Initialanzeige
 priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
 changeDisplay.textContent = changeInput.value;
 changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
 
-// Funktion zum Hinzufügen eines neuen Datenpunkts
+// Funktion für neuen Datenpunkt
 function addDataPoint() {
-    const time = new Date().toLocaleTimeString(); // aktuelle Zeit
+    const time = new Date().toLocaleTimeString();
     chartData.labels.push(time);
     chartData.datasets[0].data.push(parseFloat(priceInput.value));
     priceChart.update();
 
-    // Preis anzeigen
     priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
-
-    // Change anzeigen und färben
     changeDisplay.textContent = changeInput.value;
     changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
 }
 
-// Button Event
 addPointBtn.addEventListener("click", addDataPoint);
