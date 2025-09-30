@@ -5,6 +5,7 @@ const changeDisplay = document.getElementById("changeDisplay");
 const addPointBtn = document.getElementById("addPoint");
 const ctx = document.getElementById("priceChart").getContext("2d");
 
+// Startwerte: nur ein Punkt (gerade Linie)
 let chartData = {
     labels: ["Now"],
     datasets: [{
@@ -16,6 +17,7 @@ let chartData = {
     }]
 };
 
+// Chart initialisieren
 const priceChart = new Chart(ctx, {
     type: 'line',
     data: chartData,
@@ -32,21 +34,24 @@ const priceChart = new Chart(ctx, {
 });
 
 // Anzeige initial aktualisieren
-priceDisplay.textContent = `$${priceInput.value}`;
+priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
 changeDisplay.textContent = changeInput.value;
 changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
 
 // Funktion zum Hinzufügen eines neuen Datenpunkts
 function addDataPoint() {
-    const time = new Date().toLocaleTimeString();
+    const time = new Date().toLocaleTimeString(); // aktuelle Zeit
     chartData.labels.push(time);
     chartData.datasets[0].data.push(parseFloat(priceInput.value));
     priceChart.update();
 
+    // Preis anzeigen
     priceDisplay.textContent = `$${parseFloat(priceInput.value).toFixed(8)}`;
-    changeDisplay.textContent = changeInput.value;
 
+    // Change anzeigen und färben
+    changeDisplay.textContent = changeInput.value;
     changeDisplay.className = changeInput.value.includes("-") ? "negative" : "positive";
 }
 
+// Button Event
 addPointBtn.addEventListener("click", addDataPoint);
